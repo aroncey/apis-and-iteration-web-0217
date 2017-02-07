@@ -1,7 +1,6 @@
 require 'rest-client'
 require 'json'
 require 'pry'
-require 'pp'
 
 def get_character_movies_from_api(character)
   #make the web request
@@ -37,39 +36,16 @@ end
 
 def parse_character_movies(film_link_hash)
   # some iteration magic and puts out the movies in a nice list
-# new_hash ={}
-#   binding.pry
-#   film_link_hash.collect do | film|
-#     binding.pry
-#     film.collect do | k,v |
-#       if k == "title"
-#         new_hash[v] ||= {}
-#       end
-#     end
-#   end
-# # ----x
-#
-#     new_hash.each do |title,value|
-#
-#       film_link_hash.each do | item |
-#         item.each do | k, v |
-#           if v == title
-#             new_hash[title] = item
-#             item.delete_if{ |kk,vv| kk == "title"}
-#
-#           end
-#         end
-#       end
-#     end
-# pp new_hash
-  result = film_link_hash.collect do |film|
-    title = film.delete("title")
-    [title, film]
-  end.to_h
-  # reduce
-  pp result
+new_arr = []
+  film_link_hash.collect do | film|
+  film.collect do | k,v |
+      if k == "title"
+        new_arr.push(v)
+      end
+    end
+  end
+  new_arr
 end
-
 
 def show_character_movies(character)
   films_hash = get_character_movies_from_api(character)
